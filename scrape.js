@@ -2,6 +2,10 @@ const cheerio = require("cheerio");
 const { ogTags, otherTags } = require("./tags");
 const HtmlDocument = require("./models/htmlDocument");
 
+/**
+ * Scrapes OG and non OG tags from html.
+ * @param {*} html html response from request.
+ */
 const scrape = (html) => {
   let response = {};
   const htmlDocument = new HtmlDocument(cheerio.load(html));
@@ -9,7 +13,11 @@ const scrape = (html) => {
   scrapeNonOpenGraphProperties(htmlDocument, response);
   return response;
 };
-
+/**
+ * Scrapes the HTMLDocument for Open Graph tags.
+ * @param {*} htmlDocument
+ * @param {*} response
+ */
 const scrapeOpenGraphProperties = (htmlDocument, response) => {
   ogTags.map((tag) => {
     let $tag = htmlDocument.getTagByProperty(tag);
@@ -23,7 +31,7 @@ const scrapeOpenGraphProperties = (htmlDocument, response) => {
       });
     }
 
-    let propertiesExist = doPropertiesExist(parsedObj);
+    let propertiesExist = wereSubPropertiesFound(parsedObj);
     if ($tag.doesTagExist() || propertiesExist) {
       let content = $tag.getContent();
       if (propertiesExist) {
@@ -35,7 +43,11 @@ const scrapeOpenGraphProperties = (htmlDocument, response) => {
     }
   });
 };
-
+/**
+ * Scrapes the HTMLDocument for generic tags.
+ * @param {*} htmlDocument
+ * @param {*} response
+ */
 const scrapeNonOpenGraphProperties = (htmlDocument, response) => {
   otherTags.map((tag) => {
     if (!isOpenGraphTagFound(response, tag.name)) {
@@ -48,11 +60,20 @@ const scrapeNonOpenGraphProperties = (htmlDocument, response) => {
   });
 };
 
+/**
+ * Checks if the open graph tag was already found and added to response.
+ * @param {*} response
+ * @param {*} name
+ */
 const isOpenGraphTagFound = (response, name) => {
   return response.hasOwnProperty(name);
 };
 
-const doPropertiesExist = (tagObj) => {
+/**
+ * Checks if sub properties were found.
+ * @param {*} tagObj
+ */
+const wereSubPropertiesFound = (tagObj) => {
   return Object.keys(tagObj).length > 0;
 };
 
