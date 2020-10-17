@@ -1,6 +1,9 @@
 module.exports = class InMemoryCache {
   constructor() {
     this.map = new Map();
+    setTimeout(() => {
+      this.refresh();
+    }, 1000 * 60 * 60 * 24);
   }
   /**
    * Puts value in the cache.

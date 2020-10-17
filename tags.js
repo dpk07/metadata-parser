@@ -133,6 +133,11 @@ const otherTags = [
     fieldName: "description",
     hasOtherProperties: false,
   },
+  {
+    name: "image",
+    fieldName: "image",
+    hasOtherProperties: false,
+  },
 ];
 
 module.exports = { ogTags, otherTags };
