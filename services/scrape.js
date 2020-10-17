@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
-const { ogTags, otherTags } = require("./tags");
-const HtmlDocument = require("./models/htmlDocument");
+const { ogTags, otherTags } = require("../tags");
+const HtmlDocument = require("../models/htmlDocument");
 
 /**
  * Scrapes OG and non OG tags from html.

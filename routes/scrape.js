@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const request = require("request");
-const scrape = require("../scrape");
-const { tryCacheHit, updateCache } = require("../cacheMiddleware");
+const scrape = require("../services/scrape");
+const { tryCacheHit, updateCache } = require("../middlewares/cacheMiddleware");
 router.post(
   "/",
   tryCacheHit,

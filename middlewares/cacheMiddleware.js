@@ -1,4 +1,4 @@
-const cache = new (require("./models/cache"))();
+const cache = new (require("../models/cache"))();
 
 /**
  * Checks if the url exists in the cache
